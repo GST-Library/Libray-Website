@@ -115,6 +115,7 @@ export default function HomePage() {
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
   }, []);
+  
   return (
         <div className='w-full h-full overflow-x-hidden  '>
 
@@ -165,7 +166,7 @@ export default function HomePage() {
                 </div>
             </div>
 
-            </div>
+            {/*</div>*/}
 
             {/* Overview */}
             <div className="p-5 sm:p-10 mx-4 sm:mx-10 md:mx-20 lg:mx-40 flex flex-col items-center">
