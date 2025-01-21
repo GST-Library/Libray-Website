@@ -14,14 +14,14 @@ app.use(express.urlencoded({extended: true, limit: "50mb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
 
-// import userRouter from './routes/user.routes.js'
+import userRouter from './routes/user.routes.js'
 import pyqRouter from './routes/pyqs.route.js';
 import syllabusRouter from './routes/syllabus.route.js';
 
 app.use("/api/v1/syllabus",syllabusRouter)
 app.use("/api/v1/pyqs",pyqRouter)
 
-// app.use("/api/v1/users",userRouter)
+app.use("/api/v1/users",userRouter)
 
 
 export { app }

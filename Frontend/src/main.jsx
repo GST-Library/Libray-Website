@@ -11,7 +11,8 @@ import Others from './Pages/Others'
 import Services from './Pages/QuickLinks'
 import DonateBooks from './Pages/Books-Donate'
 import SuggestBooks from './Pages/Books-Suggest'
-import Register from './Pages/Register'
+import RegistrationPage from './RegistrationPage'
+import LoginPage from './LoginPage'
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -27,7 +28,9 @@ import Register from './Pages/Register'
         <Route path='donate-books' element={<DonateBooks/>}/>
         <Route path='suggest-books' element={<SuggestBooks/>}/>
       </Route>
-      <Route path='register' element={<Register/>} />
+      <Route path='register' element={<RegistrationPage/>} />
+      <Route path='login' element={<LoginPage/>} />
+      
     </>
     )
   )
