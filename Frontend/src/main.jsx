@@ -6,7 +6,7 @@ import Layout from './Layout'
 import HomePage from './HomePage'
 import AboutUs from './Pages/AboutUs'
 import ContactUs from './Pages/ContactUs'
-import Academics from './Pages/Academics'
+import EResources from './Pages/E-Resources'
 import Others from './Pages/Others'
 import Services from './Pages/QuickLinks'
 import DonateBooks from './Pages/Books-Donate'
@@ -22,7 +22,7 @@ import LoginPage from './LoginPage'
         <Route path='home' element={<HomePage/>}/>
         <Route path='about' element={<AboutUs/>}/>
         <Route path='contactus' element={<ContactUs/>}/>
-        <Route path='academics' element={<Academics/>}/>
+        <Route path='E-Resources' element={<EResources/>}/>
         <Route path='others' element={<Others/>}/>
         <Route path='quicklinks' element={<Services/>}/>
         <Route path='donate-books' element={<DonateBooks/>}/>

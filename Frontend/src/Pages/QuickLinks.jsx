@@ -1,31 +1,30 @@
-import { useState } from 'react'
-import '../css/QuickLinks.css'
-import {useScrollToHash, useSmoothScroll} from '../Navigation'
+import '../css/form.css';
+import { useScrollToHash, useSmoothScroll } from '../Navigation';
 import usePyqsStore from '../Store/pyqs.store';
-import axios from 'axios';
+import { Helmet } from 'react-helmet';
 
 const branchOptions = [
-    { value: "choose", text: "Choose Branch" },
-    { value: "Computer Engineering"  , text: "Computer Engineering"   },
-    { value: "Electronics and Telecommunication", text: "Electronics and Telecommunication" },
-    { value: "Electronics and Computer Science"  , text: "Electronics and Computer Science"   },
-    { value: "Information Technology", text: "Information Technology" },
-    { value: "CS IOT" , text: "CS IOT"  },
-    { value: "First Year Engineering" , text: "First Year Engineering"  },
-    { value: "AIML", text: "AIML" },
-    { value: "AIDS", text: "AIDS" },
+  { value: "choose", text: "Choose Branch" },
+  { value: "Computer Engineering", text: "Computer Engineering" },
+  { value: "Electronics and Telecommunication", text: "Electronics and Telecommunication" },
+  { value: "Electronics and Computer Science", text: "Electronics and Computer Science" },
+  { value: "Information Technology", text: "Information Technology" },
+  { value: "CS IOT", text: "CS IOT" },
+  { value: "First Year Engineering", text: "First Year Engineering" },
+  { value: "AIML", text: "AIML" },
+  { value: "AIDS", text: "AIDS" },
 ];
 
 const semesterOptions = [
-    { value: "choose", text: "Choose Semester" },
-    { value: "SEM 1", text: "SEM 1" },
-    { value: "SEM 2", text: "SEM 2" },
-    { value: "SEM 3", text: "SEM 3" },
-    { value: "SEM 4", text: "SEM 4" },
-    { value: "SEM 5", text: "SEM 5" },
-    { value: "SEM 6", text: "SEM 6" },
-    { value: "SEM 7", text: "SEM 7" },
-    { value: "SEM 8", text: "SEM 8" },
+  { value: "choose", text: "Choose Semester" },
+  { value: "SEM 1", text: "SEM 1" },
+  { value: "SEM 2", text: "SEM 2" },
+  { value: "SEM 3", text: "SEM 3" },
+  { value: "SEM 4", text: "SEM 4" },
+  { value: "SEM 5", text: "SEM 5" },
+  { value: "SEM 6", text: "SEM 6" },
+  { value: "SEM 7", text: "SEM 7" },
+  { value: "SEM 8", text: "SEM 8" },
 ];
 
 const subjectOptions = {
@@ -120,27 +119,24 @@ const subjectOptions = {
 // ];
 
 const yearOptions = [
-    { value: "2019", text: "2019" },
-    { value: "2020", text: "2020" },
-    { value: "2021", text: "2021" },
-    { value: "2022", text: "2022" },
-    { value: "2023", text: "2023" },
-    { value: "2024", text: "2024" },
+  { value: "2019", text: "2019" },
+  { value: "2020", text: "2020" },
+  { value: "2021", text: "2021" },
+  { value: "2022", text: "2022" },
+  { value: "2023", text: "2023" },
+  { value: "2024", text: "2024" },
 ];
 
 const monthOptions = [
-    { value: "May", text: "May" },
-    { value: "November", text: "November" },
+  { value: "May", text: "May" },
+  { value: "November", text: "November" },
 ];
-// const Scholarship = "https://scholarships.gov.in/"
-// const Research_fund = "https://www.aicte-india.org/opportunities/students/research-funds"
 
 function Quicklinks() {
-    useSmoothScroll();
-    useScrollToHash(['pyq', 'lib-brochure', "more"]);
+  useSmoothScroll();
+  useScrollToHash(['pyq', 'lib-brochure', 'more']);
 
-// Extract state and actions from the store
-const {
+  const {
     branch,
     semester,
     subject,
@@ -155,174 +151,143 @@ const {
     setMonth,
     fetchPYQ,
     downloadPYQ,
-} = usePyqsStore();
+  } = usePyqsStore();
 
-const handleBranchChange = (e) => {
-    const selectedBranch = e.target.value;
-    console.log("Branch changed to:", selectedBranch); // Debug
-    setBranch(e.target.value);
-    setSemester("choose");
-    setSubject("choose");
-};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const pyqData = await fetchPYQ();
+      if (pyqData && pyqData._id) {
+        const response = await downloadPYQ(pyqData._id);
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = response.headers['content-disposition']?.match(/filename="?([^"]+)"?/)?.[1] || 'pyq.pdf';
+        link.click();
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error("Error fetching or downloading PYQ:", err);
+    }
+  };
 
-const handleSemesterChange = (e) => {
-    const selectedSemester = e.target.value;
-    console.log("Semester changed to:", selectedSemester); // Debug
-    setSemester(e.target.value);
-    setSubject("choose");
-};
-
-const handleSubjectChange = (e) => {
-    const selectedSubject = e.target.value;
-    console.log("Subject changed to:", selectedSubject); // Debug
-    setSubject(e.target.value);
-};
-
-const handleYearChange = (e) => {
-    const selectedYear = e.target.value;
-    console.log("Year changed to:", selectedYear); // Debug
-    setYear(e.target.value);
-};
-
-const handleMonthChange = (e) => {
-    const selectedMonth = e.target.value;
-    console.log("Month changed to:", selectedMonth); // Debug
-    setMonth(e.target.value);
-};
-
-const availableSubjects = subjectOptions[branch]?.[semester] || [];
-
-const isSubmitDisabled =
+  const isSubmitDisabled =
     branch === "choose" ||
     semester === "choose" ||
     subject === "choose" ||
     year === "choose" ||
     month === "choose" ||
     loading;
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const pyqData = await fetchPYQ();
-            if (pyqData && pyqData._id) { // Assuming the PYQ data contains an 'id' field
-    
-                const response = await downloadPYQ(pyqData._id);
-    
-                const url = window.URL.createObjectURL(new Blob([response.data]));
-                const link = document.createElement('a');
-                link.href = url;
-    
-                const contentDisposition = response.headers['content-disposition'];
-                let fileName = 'pyq.pdf';
-                if (contentDisposition) {
-                    const fileNameMatch = contentDisposition.match(/filename="?([^"]+)"?/);
-                    if (fileNameMatch && fileNameMatch.length === 2) {
-                        fileName = fileNameMatch[1];
-                    }
-                }
-    
-                link.setAttribute('download', fileName);
-                document.body.appendChild(link);
-                link.click();
-                link.parentNode.removeChild(link);
-                window.URL.revokeObjectURL(url);
-                console.log("Download initiated");
-            } else {
-                console.log("PYQ Data is undefined or missing 'id'");
-            }
-        } catch (err) {
-            console.error("Error fetching or downloading PYQ:", err);
-        }
+  
+    const handleBranchChange = (e) => {
+      setBranch(e.target.value);
+      setSemester("choose"); // Reset semester when branch changes
+      setSubject("choose"); // Reset subject when branch changes
     };
-    
+  
+    const handleSemesterChange = (e) => {
+      setSemester(e.target.value);
+      setSubject("choose"); // Reset subject when semester changes
+    };
+  
+    const handleSubjectChange = (e) => {
+      setSubject(e.target.value);
+    };
+  
 
-return (
-    <div className='font-serif mt-28'>
-      <div className='mx-40' id='Donate-books'>
-        <div className='flex items-center justify-center w-full h-40'>
-          <div>
-            <div className='flex justify-center text-4xl font-bold'>
-              <p>Question Papers</p>
+    return (
+      <div className="overflow-x-hidden w-full h-full">
+        <Helmet>
+          <title>others | Library | SIESGST</title>
+        </Helmet>
+  
+        <div className="mx-4 sm:mx-16 lg:mx-40" id="Select-PYQs">
+          <div className="flex items-center justify-center w-full h-auto py-8">
+            <div>
+              <div className="flex justify-center text-3xl lg:text-4xl font-bold">
+                <p>Download Question Paper</p>
+              </div>
+              <div className="mx-auto mt-2 mb-6 border-b-4 border-blue-700 w-24 lg:w-44" />
             </div>
-            <div className="mx-auto mt-2 mb-10 border-b-4 border-blue-700 w-44"></div>
           </div>
+  
+          <form id="select-pyqs-form" className="form-container">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4">
+              Select Details
+            </h2>
+  
+            {/* Branch */}
+            <div className="form-group">
+              <label htmlFor="branch">Branch:</label>
+              <select
+                id="branch"
+                value={branch}
+                onChange={handleBranchChange}
+                className="form-control"
+              >
+                {branchOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.text}
+                  </option>
+                ))}
+              </select>
+            </div>
+  
+            {/* Semester */}
+            <div className="form-group">
+              <label htmlFor="semester">Semester:</label>
+              <select
+                id="semester"
+                value={semester}
+                onChange={handleSemesterChange}
+                disabled={branch === "choose"}
+                className="form-control"
+              >
+                {semesterOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.text}
+                  </option>
+                ))}
+              </select>
+            </div>
+  
+            {/* Subject */}
+            <div className="form-group">
+              <label htmlFor="subject">Subject:</label>
+              <select
+                id="subject"
+                value={subject}
+                onChange={handleSubjectChange}
+                disabled={branch === "choose" || semester === "choose"}
+                className="form-control"
+              >
+                <option value="choose">Choose Subject</option>
+                {subjectOptions[branch]?.[semester]?.map((sub, idx) => (
+                  <option key={idx} value={sub}>
+                    {sub}
+                  </option>
+                ))}
+              </select>
+            </div>
+  
+            {/* Submit Button */}
+            <div className="flex justify-center mt-6">
+              <button
+                type="submit"
+                className={`submit-btn ${isSubmitDisabled && "opacity-50"}`}
+                disabled={isSubmitDisabled}
+              >
+                Get PYQs
+              </button>
+            </div>
+          </form>
         </div>
-    <form 
-    id="question-paper" 
-    className="form-container" 
-    onSubmit={handleSubmit}>
-        <label htmlFor="branch">Branch:</label>
-        <select id="branch" value={branch} onChange={handleBranchChange}>
-        {branchOptions.map(option => (
-            <option key={option.value} value={option.value}>
-            {option.text}
-            </option>
-        ))}
-        </select>
-
-        <label htmlFor="semester">Semester:</label>
-        <select
-        id="semester"
-        value={semester}
-        onChange={handleSemesterChange}
-        disabled={branch === "choose"}
-        >
-        {semesterOptions.map(option => (
-            <option key={option.value} value={option.value}>
-            {option.text}
-            </option>
-        ))}
-        </select>
-
-        <label htmlFor="subject">Subject:</label>
-        <select
-        id="subject"
-        value={subject}
-        onChange={handleSubjectChange}
-        disabled={semester === "choose"}
-        >
-        {availableSubjects.length > 0 ? (
-            availableSubjects.map((subj, index) => (
-            <option key={index} value={subj}>
-                {subj}
-            </option>
-            ))
-        ) : (
-            <option value="">No subjects available</option>
-        )}
-        </select>
-
-        <label htmlFor="year">Year:</label>
-        <select id="year" value={year} onChange={handleYearChange}>
-        <option value="choose">Choose Year</option>
-        {yearOptions.map(option => (
-            <option key={option.value} value={option.value}>
-            {option.text}
-            </option>
-        ))}
-        </select>
-
-        <label htmlFor="month">Month:</label>
-        <select id="month" value={month} onChange={handleMonthChange}>
-        <option value="choose">Choose Month</option>
-        {monthOptions.map(option => (
-            <option key={option.value} value={option.value}>
-            {option.text}
-            </option>
-        ))}
-        </select>
-
-        {error && <p className="error-message">{error}</p>}
-
-        <button type="submit" disabled={isSubmitDisabled}>
-        {loading ? 'Submitting...' : 'Submit'}
-        </button>
-    </form>
-    </div>
-
-        <div className='flex items-center justify-center w-full h-32'/>
-    </div>
-);
+  
+        <div className="flex items-center justify-center w-full h-16" />
+      </div>
+    );
 }
+
+
 
 export default Quicklinks;
