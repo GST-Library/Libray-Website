@@ -1,254 +1,245 @@
-import Images from '../assets/img5.webp'
-import sand from '../assets/sandip.webp'
-import indra from '../assets/indrabahadur.webp'
-import sac from '../assets/sachin.webp'
-import ref from '../assets/img4.webp'
-import ret from '../assets/bookret.webp'
-import fac from '../assets/img9.webp'
-import repo from '../assets/img3.webp'
-import opa from '../assets/img11.webp'
-import idi from '../assets/img6.webp'
-import comp from '../assets/img12.webp'
-import dig from '../assets/image1.webp'
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import Images from '../assets/HomePage/img5.webp'
+import sand from '../assets/AboutUs/sandip.webp'
+import indra from '../assets/AboutUs/indrabahadur.webp'
+import sac from '../assets/AboutUs/sachin.webp'
+import ref from '../assets/HomePage/img4.webp'
+import ret from '../assets/AboutUs/bookret.webp'
+import fac from '../assets/HomePage/img9.webp'
+import repo from '../assets/HomePage/img3.webp'
+import opa from '../assets/HomePage/img11.webp'
+import idi from '../assets/HomePage/img6.webp'
+import comp from '../assets/HomePage/img12.webp'
+import dig from '../assets/HomePage/image1.webp'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock } from '@fortawesome/free-regular-svg-icons';
 import {useScrollToHash, useSmoothScroll} from '../Navigation'
-import { Link } from 'react-router-dom'
+import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { Helmet } from 'react-helmet';
 
-library.add(fas, faClock);
-library.add(fas);
+const facilities = [
+    { image: ref, title: "Reference Service" },
+    { image: ret, title: "Home Issue/Book Return" },
+    { image: fac, title: "Book Bank Facility" },
+    { image: repo, title: "Reprography Service" },
+    { image: opa, title: "Library OPAC" },
+    { image: fac, title: "Newspaper Clipping" },
+];
 
+const FacilityCard = ({ image, title }) => (
+    <div className="bg-white rounded-xl overflow-hidden hover:scale-105 duration-700">
+        <img src={image} className="h-60 w-full object-cover" alt={title} />
+        <div className="p-6">
+            <h3 className="text-xl font-extrabold text-s_orange">{title}</h3>
+        </div>
+    </div>
+);
+
+const staffMembers = [
+    {
+        name: "Mr. Sandip Patil",
+        position: "Library Clerk",
+        qualifications: "M.A, B.Ed., M.L.I.Sc",
+        image: sand,
+        alt: "Library Clerk"
+    },
+    {
+        name: "Mr. Sachin Gurav",
+        position: "Library Attendant",
+        qualifications: "M.L.I.c",
+        image: sac,
+        alt: "Library Attendant"
+    },
+    {
+        name: "Mr. Indrabahadur Singh",
+        position: "Library Attendant",
+        qualifications: "10TH",
+        image: indra,
+        alt: "Library Attendant"
+    }
+];
+
+const StaffCard = ({ name, position, qualifications, image, alt }) => (
+    <div className="bg-white rounded-xl overflow-hidden hover:scale-105 duration-700 w-full sm:w-[300px] lg:w-[320px]">
+        <img src={image} className="w-full h-[250px] object-cover" alt={alt} />
+        <div className="p-6">
+            <h3 className="text-2xl font-extrabold text-s_orange">{position}</h3>
+            <p className="font-bold text-s_orange mt-2">{name}</p>
+            <p className="font-semibold text-s_orange">{qualifications}</p>
+        </div>
+    </div>
+);
+
+const infrastructureData = [
+    {
+        image: idi,
+        title: "Network Infrastructure",
+        points: [
+            "High-Speed Internet", 
+            "Secure Wi-Fi for students and staff"
+        ],
+    },
+    {
+        image: comp,
+        title: "Hardware Infrastructure",
+        points: [
+            "Computing devices for catalog browsing",
+            "ID card scanning attendance system",
+        ],
+    },
+    {
+        image: dig,
+        title: "Digital Library",
+        points: [
+            "E-book and digital resource management",
+            "Integration with external repositories",
+            "Remote access to resources",
+        ],
+    },
+];
+
+const InfrastructureCard = ({ image, title, points }) => (
+    <div className="bg-white rounded-xl overflow-hidden hover:scale-105 duration-700 w-[280px] sm:w-[300px]">
+        <img src={image} className="h-60 w-full object-cover" alt={title} />
+        <div className="p-6">
+            <h3 className="text-2xl font-extrabold text-s_orange">{title}</h3>
+            <ul className="list-disc list-inside mt-2 text-s_orange">
+                {points.map((point, index) => (
+                    <li key={index}>{point}</li>
+                ))}
+            </ul>
+        </div>
+    </div>
+);
 
 export default function AboutUs() {
-useSmoothScroll();
-    
 
-const refs = useScrollToHash(['library-hours','library-staffs','facilities']);
+    useSmoothScroll();
+    const refs = useScrollToHash(['library-hours','library-staffs','facilities']);
 
     return (
-        <div className='font-serif mt-28'>
-            <Link to='/about'></Link>
+        <div className='w-full h-full overflow-x-hidden'>
 
-                            {/* About us */}
-            <div className='w-full h-48 bg-[#efefef] flex items-center justify-center'>
-                <div >
-                    <div className='flex justify-center text-6xl font-bold text-[#014da1]'>
-                    <p>About Us</p>
-                    </div>
-                    <div className=" border-b-4 mx-auto w-44 mt-2 border-red-600 mb-10"></div>
-                </div>
-            </div>
+            <Helmet>
+                <title>About Us | Library | SIESGST</title>
+            </Helmet>
 
-                            {/* Library hours */}
-
-            <div ref={refs['library-hours']} id="library-hours">
-                <div className='h-28 mt-6 flex items-center justify-center'>
-                    <div >
-                    <div className='flex justify-center text-4xl font-bold mt-12 '>
-                        <p>Library-Hours</p>
-                        </div>
-                        <div className=" border-b-4 mx-auto w-44 mt-2 border-blue-700 mb-10"></div>
-                    </div>
-                </div>
-        
-                <div className="h-96 mx-40 my-0.5 bg-[#f3f2ed] shadow-2xl flex items-center rounded-xl hover:scale-105 duration-700">
-                    <div className="m-20 w-5/12 rounded-2xl ">
-                        <img src={Images} className="h-60 rounded-2xl "></img>
-                    </div>
-                    <div className='w-7/12 mr-10 p-6 '>
-                    <ul className='list-none'>
-                        
-                        <li className="text-2xl font-bold text-orange-500">
-                        <FontAwesomeIcon icon="fa-regular fa-clock" className="mr-2 text-blue-500" />
-                            OPERATING HOURS</li>
-                        <li className="ml-8 font-semibold">
-                            8:00 AM to 7:00 PM</li>
-                            <li className='ml-8 font-semibold'>Circulation time 9:00 AM to 5:00 PM</li>    
-                        <li className='ml-8 font-semibold'>Monday to Saturday</li>
-                        <li className='mt-4 text-2xl font-bold text-orange-500'>
-                        <FontAwesomeIcon icon="fa-regular fa-clock" className="mr-2 text-blue-500" />
-                            SATURDAYS</li>
-                        <li className='ml-8 font-semibold'>
-                            9:00 AM to 2:00 PM</li>
-                            <li className='ml-8 font-semibold'>2ND and 4TH SATURDAYS CLOSED</li>    
-                        <li className='mt-4 text-3xl font-bold text-orange-500'>Closed on Sundays and public holidays</li>
-                        </ul>
-                    </div>
-                
-            
-                
-
-                </div>
-            </div>
-                                        {/* Library Staffs */}
-            <div ref={refs['library-staffs']} id="library-staffs">
-                <div className='w-full h-36 flex items-center justify-center'>
-                    <div>
-                        <div className='flex justify-center text-4xl font-bold mt-12'>
-                            <p>Library Staffs</p>
-                            </div>
-                            <div className="border-b-4 mx-auto w-44 mt-2 border-blue-700 mb-10"></div>
-                    </div>
-                </div>
-
-                <div className="bg-blue-500 shadow-2xl rounded-xl mx-40 my-0.5 p-12 min-h-[600px] flex items-center">
-                    <div className="flex justify-center gap-12 w-full">
-                        <div className="bg-white rounded-xl overflow-hidden hover:scale-105 duration-700 w-80">
-                            <img src={sand} className="h-80 w-full object-cover"></img>
-                            <div className="p-6">
-                                <h3 className="text-2xl font-extrabold text-orange-500">Library Clerk</h3>
-                                <p className="font-bold text-orange-500 mt-2">Mr. Sandip Patil</p>
-                                <p className="font-semibold text-orange-500">M.A, B.Ed., M.L.I.Sc</p>
-                            </div>
-                        </div>
-
-                        <div className="bg-white rounded-xl overflow-hidden hover:scale-105 duration-700 w-80">
-                            <img src={sac} className="h-56w-full object-cover"></img>
-                            <div className="p-6">
-                                <h3 className="text-2xl font-extrabold text-orange-500">Library Attendant</h3>
-                                <p className="font-bold text-orange-500 mt-2">Mr. Sachin Gurav</p>
-                                <p className="font-semibold text-orange-500"> M.L.I.c</p>
-                            </div>
-                        </div>
-
-            
-                        <div className="bg-white rounded-xl overflow-hidden hover:scale-105 duration-700 w-80">
-                            <img src={indra} className="h-80 w-full object-cover"></img>
-                            <div className="p-6">
-                                <h3 className="text-2xl font-extrabold text-orange-500">Library Attendant</h3>
-                                <p className="font-bold text-orange-500 mt-2">Mr. Indrabahadur Singh</p>
-                                <p className="font-semibold text-orange-500">10TH</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-                                        {/* Facilities */}
-            <div ref={refs['facilities']} id="facilities">
-                <div className='w-full h-36 flex items-center justify-center'>
+            {/* About us */}
+            <div className='bg-gray-100 flex items-center justify-center py-8 sm:py-12 md:py-16'>
                 <div>
-                    <div className='flex justify-center text-4xl font-bold mt-12'>
-                    <p>Facilities</p>
+                    <div className='flex justify-center text-4xl sm:text-5xl md:text-6xl font-bold text-s_blue'>
+                        <p>About Us</p>
+                    </div>
+                    <div className="border-b-4 mx-auto w-32 sm:w-44 mt-2 border-s_orange"/>
                 </div>
-                <div className="border-b-4 mx-auto w-44 mt-2 border-blue-700 mb-10"></div>
+            </div>
+
+            {/* Library Hours */}
+            <div className="p-5 sm:p-10 mx-4 sm:mx-10 md:mx-20 lg:mx-40 flex flex-col items-center">
+                <div>
+                    {/* Heading */}
+                    <div className="flex justify-center text-2xl sm:text-3xl md:text-4xl font-bold">
+                        <p>Library Hours</p>
+                    </div>
+                    <div className="border-b-4 mx-auto w-24 sm:w-28 md:w-36 mt-2 border-blue-700 mb-5 sm:mb-10"></div>
                 </div>
-                </div>
-                <div className="bg-blue-500 shadow-2xl rounded-xl mx-40 my-0.5 p-12 min-h-[800px] flex items-center">
-                    <div className="flex flex-wrap justify-center gap-12 w-full">
-                        <div className="bg-white rounded-xl overflow-hidden mr-10 hover:scale-105 duration-700 w-64">
-                            <img src={ref} className="h-60 w-full object-cover"></img>
-                            <div className="p-6">
-                                <h3 className="text-xl font-extrabold text-orange-500">Reference Service</h3>
-                            </div>
-                        </div>
 
-            
-                        <div className="bg-white rounded-xl overflow-hidden hover:scale-105 duration-700 w-64">
-                            <img src={ret} className="h-60 w-full object-cover"></img>
-                            <div className="p-6">
-                                <h3 className="text-xl font-extrabold text-orange-500">HomeIssue/Book return</h3>
-                            </div>
-                        </div>
+                {/* Content Section */}
+                <div className="flex flex-col sm:flex-row justify-between items-center text-base sm:text-lg md:text-xl bg-header-color w-full rounded-xl my-5 sm:my-10 hover:scale-105 hover:shadow-2xl duration-700">
+                    {/* Image Section */}
+                    <div className="m-5 sm:m-10 px-5 w-full sm:w-5/12 flex justify-center">
+                        <img className="w-full sm:w-auto h-40 sm:h-60 md:h-72 rounded-xl shadow-lg" src={Images} alt="Library Hours" />
+                    </div>
 
-        
-                        <div className="bg-white rounded-xl overflow-hidden ml-10 hover:scale-105 duration-700 w-64">
-                            <img src={fac} className="h-60 w-full object-cover"></img>
-                            <div className="p-6">
-                                <h3 className="text-xl font-extrabold text-orange-500">Book Bank facility</h3>
-                            </div>
+                    {/* Text Section */}
+                    <div className='w-full sm:w-7/12 p-5 md:mr-10'>
+                        <div className="text-2xl font-bold text-s_orange flex items-center pb-6">
+                            <FontAwesomeIcon icon={faClock} className="pr-2 text-s_orange" />
+                            Operating Hours
                         </div>
-
-            
-                        <div className="bg-white rounded-xl overflow-hidden mr-10 hover:scale-105 duration-700 w-64">
-                            <img src={repo} className="h-60 w-full object-cover"></img>
-                            <div className="p-6">
-                                <h3 className="text-xl font-extrabold text-orange-500">Repography service</h3>
+                        <div className="text-left space-y-4 ml-">
+                            <div className="">
+                                <p className="font-semibold">Monday To Saturday</p>
+                                <p className="text-sm sm:text-base">8:00 AM To 7:00 PM</p>
+                                <p className="text-sm sm:text-base">(Circulation Time 9:00 AM To 5:00 PM)</p>
                             </div>
-                        </div>
-
-        
-                        <div className="bg-white rounded-xl overflow-hidden hover:scale-105 duration-700 w-64">
-                            <img src={opa} className="h-60 w-full object-cover"></img>
-                            <div className="p-6">
-                                <h3 className="text-xl font-extrabold text-orange-500">Library OPAC</h3>
+                            <div className="">
+                                <p className="font-semibold">Saturdays</p>
+                                <p className="text-sm sm:text-base">9:00 AM To 2:00 PM</p>
                             </div>
-                        </div>
-
-                        <div className="bg-white rounded-xl overflow-hidden ml-10 hover:scale-105 duration-700 w-64">
-                            <img src={fac} className="h-60 w-full object-cover"></img>
-                            <div className="p-6">
-                                <h3 className="text-xl font-extrabold text-orange-500">Newspaper clipping</h3>
+                            <div className="">
+                                <p className="font-semibold">Closed On Sundays, Public Holidays</p>
+                                <p className="font-semibold">2nd and 4th Saturdays Closed</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-    
-                
-               
-    
-                                        {/* Infratructure */}
-            
-            <div ref={refs['infrastructure']} id="infrastructure">
-                <div className='w-full h-36 flex items-center justify-center'>
-                    <div>
-                        <div className='flex justify-center text-4xl font-bold mt-12'>
-                            <p>Infrastructure</p>
-                        </div>
-                    <div className="border-b-4 mx-auto w-44 mt-2  border-blue-700 mb-10"></div>
+
+            {/* Library Staffs */}
+            <div ref={refs['library-staffs']} id="library-staffs" className="  bg-gray-100 py-10">
+                {/* Heading */}
+                <div>
+                    <div className="flex justify-center text-2xl sm:text-3xl md:text-4xl font-bold">
+                        <p>Library Staffs</p>
                     </div>
+                    <div className="border-b-4 mx-auto w-24 sm:w-28 md:w-36 mt-2 border-blue-700 mb-5 sm:mb-10"></div>
                 </div>
-                <div className="bg-blue-500 shadow-2xl rounded-xl mx-40 my-0.5 p-12 mb-10 min-h-[600px] flex items-center">
-                    <div className="flex justify-center gap-12 w-full">
-                        <div className="bg-white rounded-xl overflow-hidden hover:scale-105 duration-700 w-80">
-                            <div className=" w-full bg-gray-300 flex items-center justify-center">
-                                <img src={idi} className="h-80 w-full object-cover"></img>
-                            </div>
-                            <div className="p-6">
-                                <h3 className="text-2xl font-extrabold text-orange-500">Network Infrastructure</h3>
-                                    <ul className="list-disc list-inside mt-2 text-orange-500">
-                                        <li>High-Speed Internet</li>
-                                        <li>Secure Wi-Fi for students and staff</li>
-                                    </ul>
-                            </div>
-                        </div>
 
-            
-                        <div className="bg-white rounded-xl overflow-hidden hover:scale-105 duration-700 w-80">
-                            <div className=" w-full bg-gray-300 flex items-center justify-center">
-                                <img src={comp} className="h-80 w-full object-cover"></img>
-                            </div>
-                            <div className="p-6">
-                                <h3 className="text-2xl font-extrabold text-orange-500">Hardware Infrastructure</h3>
-                                    <ul className="list-disc list-inside mt-2 text-orange-500">
-                                        <li>Computing devices for catalog browsing</li>
-                                        <li>ID card scanning attendance system</li>
-                                    </ul>
-                            </div>
-                        </div>
+                {/* Library Staffs Section */}
+                <div className="shadow-2xl rounded-xl flex flex-wrap justify-center items-center gap-6 lg:gap-8 p-5 sm:p-10 sm:mx-10 md:mx-20 lg:mx-40 bg-s_blue_400">
+                    {staffMembers.map((staff, index) => (
+                        <StaffCard 
+                            key={index} 
+                            name={staff.name} 
+                            position={staff.position} 
+                            qualifications={staff.qualifications} 
+                            image={staff.image} 
+                            alt={staff.alt} 
+                        />
+                    ))}
+                </div>
+            </div>
 
-                        <div className="bg-white rounded-xl overflow-hidden hover:scale-105 duration-700 w-80">
-                            <div className=" w-full bg-gray-300 flex items-center justify-center">
-                                <img src={dig} className="h-80 w-full object-cover"></img>
-                            </div>
-                            <div className="p-6">
-                                <h3 className="text-2xl font-extrabold text-orange-500">Digital Library</h3>
-                                    <ul className="list-disc list-inside mt-2 text-orange-500">
-                                        <li>E-book and digital resource management</li>
-                                        <li>Integration with external repositories</li>
-                                        <li>Remote access to resources</li>
-                                    </ul>
-                            </div>
-                        </div>
+            {/* Facilities Section */}
+            <div ref={refs['facilities']} id="facilities" className='py-10'>
+                {/* Heading */}
+                <div>
+                    <div className="flex justify-center text-2xl sm:text-3xl md:text-4xl font-bold">
+                        <p>Library Facilities</p>
                     </div>
+                    <div className="border-b-4 mx-auto w-24 sm:w-28 md:w-36 mt-2 border-blue-700 mb-5 sm:mb-10"></div>
+                </div>
+
+                <div className="bg-s_blue_400 shadow-2xl rounded-xl mx-5 sm:mx-10 md:mx-20 lg:mx-40 py-6 sm:py-12 flex flex-wrap justify-center gap-8">
+                    {facilities.map((facility, index) => (
+                        <FacilityCard key={index} image={facility.image} title={facility.title} />
+                    ))}
+                </div>
+            </div>
+
+            {/* Infrastructure Section */}
+            <div ref={refs['infrastructure']} id="infrastructure"  className="py-10 bg-gray-100">
+                {/* Heading */}
+                <div>
+                    <div className="flex justify-center text-2xl sm:text-3xl md:text-4xl font-bold">
+                        <p>Infrastructure</p>
+                    </div>
+                    <div className="border-b-4 mx-auto w-24 sm:w-28 md:w-36 mt-2 border-blue-700 mb-5 sm:mb-10"></div>
+                </div>
+
+                {/* Infrastructure Details */}
+                <div className="bg-s_blue_400 shadow-2xl rounded-xl mx-5 sm:mx-10 md:mx-20 lg:mx-40 py-6 sm:py-12 flex flex-wrap justify-center gap-8">
+                    {infrastructureData.map((infra, index) => (
+                        <InfrastructureCard
+                            key={index}
+                            image={infra.image}
+                            title={infra.title}
+                            points={infra.points}
+                        />
+                    ))}
                 </div>
             </div>
 
         </div>
-        
     )
 }
 
