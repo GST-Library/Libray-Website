@@ -110,6 +110,12 @@ function NavBar() {
         <div className="flex items-center">
           <img src={Sies_logo} alt="SIES Logo" className="h-full" />
         </div>
+    return (
+      <div className="fixed top-0 z-20 w-full h-32 bg-Navbg">
+        <div className="flex items-center justify-between h-full px-4 lg:px-8 xl:px-16 ">
+          <div className="flex items-center  ">
+            <img src={Sies_logo} alt="SIES Logo" className="h-fit mb-3" />
+          </div>
 
         {/* Hamburger Icon (visible on small screens) */}
         <div className="flex items-center lg:hidden">
@@ -117,6 +123,12 @@ function NavBar() {
             <FontAwesomeIcon icon={isOpen ? faTimes : faBars} size="lg" />
           </button>
         </div>
+          {/* Hamburger Icon (visible on small screens) */}
+          <div className="flex items-center lg:hidden">
+            <button onClick={toggleMenu} className="text-xl text-[#014da1]">
+              <FontAwesomeIcon icon={isOpen ? faTimes : faBars} size="lg" />
+            </button>
+          </div>
 
         {/* Desktop Menu (hidden on small screens) */}
         <div className="hidden lg:flex-grow lg:flex items-center justify-between w-full mt-2 pl-48">
@@ -136,12 +148,45 @@ function NavBar() {
                 drop_name={link.drop_name}
                 isMobile={false} />
             ))}
+          {/* Desktop Menu (hidden on small screens) */}
+          <div className="hidden lg:flex-grow lg:flex items-center justify-between w-full mt-2 pl-48">
+            <ul className="flex items-center justify-between w-full font-serif flex-nowrap">
+              <li className="text-[#014da1] cursor-pointer font-medium text-xl mr-4">
+                <NavLink
+                  to=""
+                  className={({ isActive }) =>
+                    `${isActive ? activeClassName : inactiveClassName}`
+                  }
+                >
+                  Home
+                </NavLink>
+              </li>
+
+              {navLinks.map((link, index) => (
+                <StyledNavLink
+                  key={index}
+                  to={link.to}
+                  text={link.text}
+                  drop_link={link.drop_link}
+                  drop_name={link.drop_name}
+                />
+              ))}
 
             <li className="text-s_blue cursor-pointer font-medium text-Primary mr-4">
               <NavLink to="contactus" className={({ isActive }) => `${isActive ? activeClassName : inactiveClassName}`}>
                 Contact Us
               </NavLink>
             </li>
+              <li className="text-[#014da1] cursor-pointer font-medium text-xl mr-4">
+                <NavLink
+                  to="contactus"
+                  className={({ isActive }) =>
+                    `${isActive ? activeClassName : inactiveClassName}`
+                  }
+                >
+                  Contact Us
+                </NavLink>
+              </li>
 
             <li>
               <NavLink to="Login" className={({ isActive }) => `${isActive ? activeClassName : inactiveClassName}` }>
@@ -160,6 +205,31 @@ function NavBar() {
           </ul>
         </div>
       </div>
+              <li>
+                {/* <div className="w-full h-full border-black	bg-orange-500 rounded-full flex	">
+                            <button className="bg-white w-17 h-20 rounded-full m-5  ">login </button>
+                        </div> */}
+                <NavLink
+                  to="Login"
+                  className={({ isActive }) =>
+                    `flex items-center bg-[#f3f2ed] font-serif rounded-full px-4 py-2 shadow-2xl border-2 border-b-2 border-[#014da1] hover:border-[#f26d21] ${
+                      isActive ? activeClassName : inactiveClassName
+                    }`
+                  }
+                >
+                  <div class="flex items-center w-full cursor-pointer">
+                    <span class="text-[#014da1] font-medium mr-4 text-xl hover:active:text-[#f26d21]">
+                      Login
+                    </span>
+                    <div class="w-12 h-12 bg-gray-400 rounded-full flex items-center justify-center text-white text-lg">
+                      Pic
+                    </div>
+                  </div>
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+        </div>
 
       {/* Mobile Menu (only visible when the hamburger is open) */}
       {isOpen && (
@@ -180,6 +250,30 @@ function NavBar() {
                 drop_name={link.drop_name}
                 isMobile={true} />
             ))}
+        {/* Mobile Menu (only visible when the hamburger is open) */}
+        {isOpen && (
+          <div className="lg:hidden">
+            <ul className="flex flex-col items-start px-4 py-2 space-y-2">
+              <li className="text-[#014da1] cursor-pointer font-medium text-xl m-8">
+                <NavLink
+                  to=""
+                  className={({ isActive }) =>
+                    `${isActive ? activeClassName : inactiveClassName}`
+                  }
+                >
+                  Home
+                </NavLink>
+              </li>
+
+              {navLinks.map((link, index) => (
+                <StyledNavLink
+                  key={index}
+                  to={link.to}
+                  text={link.text}
+                  drop_link={link.drop_link}
+                  drop_name={link.drop_name}
+                />
+              ))}
 
             <li className="text-s_blue cursor-pointer font-medium text-2-Primary mx-8">
               <NavLink to="contactus" className={({ isActive }) => `${isActive ? activeClassName : inactiveClassName}`}>
@@ -208,3 +302,30 @@ function NavBar() {
 }
 
 export default NavBar;
+
+              <li className="text-[#014da1] cursor-pointer font-medium text-xl m-8">
+                <NavLink
+                  to="contactus"
+                  className={({ isActive }) =>
+                    `${isActive ? activeClassName : inactiveClassName}`
+                  }
+                >
+                  Contact Us
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+        )}
+
+        {/* <div className='flex align-center h-12 w-40 bg-orange-400 justify-center rounded-full mt-8 '>
+                <Link to='/register'><p className='my-3 '>Register</p></Link>
+            </div>
+            
+            <div className='flex items-center'>
+                <img src={user} className='h-12 w-12 mb-4 mx-5 ' alt="" />
+            </div> */}
+      </div>
+    );
+}
+  
+export default NavBar
