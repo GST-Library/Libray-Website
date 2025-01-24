@@ -1,11 +1,17 @@
-import { Link } from "react-router-dom";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Link } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Helmet } from 'react-helmet';
+import '../css/form.css';
 
 export default function ContactUs() {
   return (
-    <div className="mx-40">
-      <Link to="/contact"></Link>
-      <section className="min-h-screen flex flex-col justify-center font-serif">
+    <div className='mx-40'>
+        <Link to='/contact'>
+        </Link>
+        <Helmet>
+                <title>Others | Library | SIESGST</title>
+            </Helmet>
+        <section className="min-h-screen flex flex-col justify-center font-serif">
         <div className="flex flex-col h-full">
           <header className="text-center mb-4">
             <h1 className="text-4xl font-bold mb-9 border-b-4 border-orange-500 pb-4 h-14 ">

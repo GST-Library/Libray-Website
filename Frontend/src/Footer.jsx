@@ -1,25 +1,26 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInstagram, faFacebook, faLinkedin, faYoutube } from '@fortawesome/free-brands-svg-icons'; 
-import Sies_logo from './assets/sies_logo_footer.png';
+import Sies_logo from './assets/Footer/sies_logo_footer.png';
 import { NavLink, Link } from 'react-router-dom';
 
-const activeClassName = 'text-[#f26d21]';
-const inactiveClassName = "text-white hover:text-gray-300";
+const activeClassName = 'text-s_orange';
+const inactiveClassName = "text-white hover:text-s_orange_400";
 
-// Sections and Links Data
 const sections = [
   {
     title: 'E-Resources',
+    to: "/E-Resources",
     links: [
       { name: 'Question Papers', path: '/quicklinks#pyq' },
-      { name: 'OER', path: '/academics' },
-      { name: 'DELNET', path: '/academics#university-syllabus' },
-      { name: 'IEEE', path: '/academics#academic-calender' },
-      { name: 'OPAC', path: '/academics#competitive-exams' }
+      { name: 'OER', path: '/E-Resources' },
+      { name: 'DELNET', path: '/E-Resources#university-syllabus' },
+      { name: 'IEEE', path: '/E-Resources#academic-calender' },
+      { name: 'OPAC', path: '/E-Resources#competitive-exams' }
     ]
   },
   {
     title: 'About Us',
+    to: "/about",
     links: [
       { name: 'Library Hours', path: '/about#library-hours' },
       { name: 'Library Rules', path: '/about#library-rules' },
@@ -29,6 +30,7 @@ const sections = [
   },
   {
     title: 'Others',
+    to: "/others",
     links: [
       { name: 'Donate Books', path: '/donate-books' },
       { name: 'Suggest Books', path: '/suggest-books' },
@@ -41,25 +43,26 @@ const sections = [
 ];
 
 const socialIcons = [
-  { icon: faInstagram, link: "https://instagram.com" },
-  { icon: faFacebook, link: "https://facebook.com" },
-  { icon: faLinkedin, link: "https://linkedin.com" },
-  { icon: faYoutube, link: "https://youtube.com" }
+  { icon: faInstagram, link: "https://www.instagram.com/siesgstevents" },
+  { icon: faFacebook, link: "https://www.facebook.com/SIESGST" },
+  { icon: faLinkedin, link: "https://www.linkedin.com/school/sies-graduate-school-of-technology/" },
+  { icon: faYoutube, link: "https://youtube.com/@siesgstweb" }
 ];
 
 function Footer() {
 
   return (
-    <div className="py-12 bg-[#014ca1] overflow-x-hidden">
+    <div className="py-12 bg-s_blue overflow-x-hidden">
       <div className="px-6 lg:mx-44">
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center w-full">
+        <div className="flex flex-wrap justify-between items-start lg:items-center w-full">
+
           <div className="flex flex-col items-center lg:items-start mb-8 lg:mb-0">
             <img src={Sies_logo} alt="SIES Logo" className="h-full" />
             <div className="flex space-x-6">
-              {socialIcons.map((social, index) => (
-                <a key={index} href={social.link} target="_blank" rel="noopener noreferrer">
+              {socialIcons.map((social) => (
+                <a key={social.link} href={social.link} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${social.link}`}>
                   <FontAwesomeIcon 
-                    className="text-3xl p-3 lg:text-4xl text-white hover:text-[#f26d21] duration-700" 
+                    className="text-3xl p-3 lg:text-4xl text-white hover:text-s_orange duration-700" 
                     icon={social.icon} 
                   />
                 </a>
@@ -68,15 +71,19 @@ function Footer() {
           </div>
 
           {/* Render sections dynamically */}
-          <div className="grid grid-cols-1 gap-8 lg:gap-16 lg:flex lg:space-x-16">
-            {sections.map((section, index) => (
-              <div key={index} className="py-6">
-                <NavLink to={`/${section.title.toLowerCase()}`} className={({ isActive }) => `${isActive ? activeClassName : inactiveClassName}`}>
-                  <p className="mb-4 font-serif font-bold text-center lg:text-left">{section.title}</p>
+          <div className="flex flex-cols-1 gap-8 lg:gap-16 lg:flex lg:space-x-16">
+            {sections.map((section) => (
+              <div key={section.title} className="py-6">
+                <NavLink 
+                  to={`${section.to}`} 
+                  className={({ isActive }) => `${isActive ? activeClassName : inactiveClassName}`}
+                  aria-label={`Go to ${section.title} section`}
+                >
+                  <p className="mb-4 font-serif font-bold text-center hover:text-s_orange_400 lg:text-left">{section.title}</p>
                 </NavLink>
                 <ul className="font-serif space-y-2">
-                  {section.links.map((link, linkIndex) => (
-                    <Link key={linkIndex} to={link.path}>
+                  {section.links.map((link) => (
+                    <Link key={link.name} to={link.path} aria-label={`Go to ${link.name}`}>
                       <li>
                         <p className={`${inactiveClassName} text-center lg:text-left cursor-pointer`}>{link.name}</p>
                       </li>

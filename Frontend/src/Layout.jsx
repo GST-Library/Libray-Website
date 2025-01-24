@@ -5,7 +5,7 @@ import { Outlet,ScrollRestoration } from 'react-router-dom'
 
 function Layout() {
   return (
-    <div className='scroll-smooth'>
+    <div className='scroll-smooth cursor-default'>
       <ScrollRestoration />
       <NavBar/>
       <Outlet/>

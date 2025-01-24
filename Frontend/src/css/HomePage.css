@@ -1,18 +1,27 @@
 @keyframes typing {
-    from { width: 0; }
+  from { width: 0; }
 }
 
 @keyframes blink {
-    50% { border-color: transparent; }
+  50% { border-color: transparent; }
+}
+
+.typing-demo,
+.typing-demo-mobile {
+  animation: typing 3s steps(40), blink .5s step-end infinite alternate;
+  overflow: hidden;
+  border-right: 6px solid white;
+  border-left: 6px solid white;
 }
 
 .typing-demo {
-    width: 19ch;
-    animation: typing 3s steps(40), blink .5s step-end infinite alternate;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 6px solid white;
-    border-left:6px solid white;
+  width: 15ch;
+  white-space: nowrap;
+}
+
+.typing-demo-mobile {
+  width: 8ch;
+  white-space: wrap;
 }
 
 .bg-typing {
@@ -62,17 +71,21 @@ to {
   width: 90%;
   display: grid;
   place-items: center;
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 .slide-track{
   display: flex;
-  width: calc(500px *18);
-  height: 400px;
-  animation: scroll 40s linear infinite;
+  /* width: calc(500px *18); */
+  animation: scroll;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+  animation-duration: 60s;
+  animation-iteration-count: infinite;
 }
+
 .slide{
-  height: 400px;
+  height: max-content;
   width: 550px;
   display: flex;
   align-items: center;
@@ -85,7 +98,7 @@ to {
   width: 100%;
   transition: transform 1s;
   z-index:5;
-  height: 280px;
+  /* height: 280px; */
 }
 
 /* Gradient shadows */
@@ -98,6 +111,8 @@ to {
   position: absolute;
   width: 15%;
   z-index: 5;
+  left: 0dvw;
+  top: px;
 }
 .slider::after {
   background: linear-gradient(to left, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 0) 100%);
@@ -106,12 +121,7 @@ to {
   position: absolute;
   width: 15%;
   z-index: 5;
-  right: -155px;
-  top: px;
-}
-
-.slider::before{
-  left: 0px;
+  right: 0dvw;
   top: px;
 }
 
@@ -130,4 +140,9 @@ to {
 
 .image-animation{
   height: 400px;
+}
+
+.homepage-bg{
+    background: linear-gradient(rgba(108, 150, 245, 0.6),
+     rgba(108, 150, 245, 0.6)),url('../assets/HomePage/library-view.png');
 }
