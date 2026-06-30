@@ -158,7 +158,7 @@
   /* Space between news items */
   width: max-content;
   /* Move -50% because we will duplicate the items to create the loop */
-  animation: ticker-scroll 40s linear infinite;
+  animation: ticker-scroll 60s linear infinite;
 }
 
 .news-ticker-content:hover {
