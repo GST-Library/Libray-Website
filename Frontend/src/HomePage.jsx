@@ -286,7 +286,8 @@ export default function HomePage() {
         {/* Content Container */}
         <div className="flex flex-col justify-between p-10 mx-5 duration-700 bg-blue-500 lg:flex-row bg-opacity-10 lg:mx-40 rounded-xl sm:p-16 hover:scale-105">
           {/* Librarian Image and Details */}
-          <div className="flex flex-col items-center mb-8 text-center lg:mb-0">
+          {/* Below div is commented because our current Librarian is not available date(12/8/2026) */}
+          {/* <div className="flex flex-col items-center mb-8 text-center lg:mb-0">
             <img
               className="object-cover h-48 mb-5 rounded-full sm:h-72"
               src={updatedLibrian}
@@ -298,7 +299,7 @@ export default function HomePage() {
             <p className="text-sm text-gray-700 sm:text-base">
               M.A., M.L.I.Sc., NET
             </p>
-          </div>
+          </div> */}
 
           {/* Librarian Message */}
           <div className="mb-8 text-blue-900 lg:w-6/12 lg:mb-0">
